@@ -2,13 +2,13 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useLazyQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
-import Loadingsvg from "../components/Loadingsvg";
-import { GetTodoListUser } from "../graphQL/Query";
+import Loadingsvg from "../assests/Loadingsvg";
+import { GET_USER_LOGIN } from "../graphQL/Query";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [getTodo, { data, loading, error }] = useLazyQuery(GetTodoListUser);
+  const [getTodo, { data, loading, error }] = useLazyQuery(GET_USER_LOGIN);
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -44,7 +44,7 @@ function Login() {
   }
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-2">
       <h1>Login</h1>
       <form>
         <div className="mb-3">
