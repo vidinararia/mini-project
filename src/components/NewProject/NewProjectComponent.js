@@ -1,23 +1,37 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import swal from "sweetalert2";
-import { ref, uploadBytes } from "firebase/storage";
-import storage from "../firebase";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  listAll,
+  list,
+} from "firebase/storage";
+import storage from "../../firebase";
 
-function Form() {
+function NewProjectComponent() {
   const formData = {
     judul: "",
     kategori: "",
     tujuan: "",
     rincian: "",
+    target: "",
+    waktu: "",
   };
 
   const [imageUpload, setImageUpload] = useState(null);
   const [data, setData] = useState(formData);
+  const [imageUrls, setImageUrls] = useState([]);
 
   const handleChange = (e) => {
     const name = e.target.name;
-
+    const { id, value } = e.target;
+    setData((prevProject) => {
+      return {
+        ...prevProject[id],
+      };
+    });
     if (name === "image") {
       const file = e.target.files[0];
       setImageUpload(file);
@@ -27,11 +41,15 @@ function Form() {
     }
   };
 
+  const imagesListRef = ref(storage, "images/");
   const handleSubmit = (e) => {
     e.preventDefault();
     if (imageUpload == null) return;
     const imageRef = ref(storage, `images/${imageUpload.name}`);
-    uploadBytes(imageRef, imageUpload).then(() => {
+    uploadBytes(imageRef, imageUpload).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((url) => {
+        setImageUrls((prev) => [...prev, url]);
+      });
       swal.fire({
         position: "center",
         icon: "success",
@@ -42,6 +60,16 @@ function Form() {
     });
     console.log(data);
   };
+
+  useEffect(() => {
+    listAll(imagesListRef).then((response) => {
+      response.items.forEach((item) => {
+        getDownloadURL(item).then((url) => {
+          setImageUrls((prev) => [...prev, url]);
+        });
+      });
+    });
+  }, []);
 
   return (
     <div className="container mt-2">
@@ -88,7 +116,7 @@ function Form() {
             Tujuan Menggalang Dana
           </label>
           <input
-            type="text"
+            type="currency"
             class="form-control"
             id="InputTujuan"
             placeholder="Tujuan"
@@ -107,6 +135,10 @@ function Form() {
             class="form-control"
             id="InputDana"
             placeholder="Rp 10.000.000"
+            name="target"
+            value={data.target}
+            onChange={handleChange}
+            required
           />
         </div>
         <div class="col-md-6">
@@ -125,7 +157,14 @@ function Form() {
           <small class="text-muted">format: jpg, jpeg, dan png</small>
         </div>
         <div class="col-md-6">
-          <label for="InputDate" class="form-label" required>
+          <label
+            for="InputDate"
+            class="form-label"
+            name="waktu"
+            value={data.waktu}
+            onChange={handleChange}
+            required
+          >
             Batas Waktu
           </label>
           <input type="date" class="form-control" id="InputDate" />
@@ -152,8 +191,11 @@ function Form() {
           </button>
         </div>
       </form>
+      {imageUrls.map((url) => {
+        return <img src={url} />;
+      })}
     </div>
   );
 }
 
-export default Form;
+export default NewProjectComponent;

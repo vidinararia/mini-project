@@ -6,7 +6,7 @@ function Galang() {
   let navigate = useNavigate();
 
   const goToForm = () => {
-    navigate("Form");
+    navigate("NewProject");
   };
 
   return (
