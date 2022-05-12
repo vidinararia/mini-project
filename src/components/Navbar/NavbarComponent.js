@@ -1,12 +1,21 @@
-import React from "react";
-import { Link, Outlet } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+import React, { useState } from "react";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { GET_USER_BY_ID } from "../../graphQL/Query";
+import { Auth } from "../../utils/Auth";
 
 function NavbarComponent() {
   let navigate = useNavigate();
 
-  const goToLogin = () => {
-    navigate("Login");
+  const { data, loading } = useQuery(GET_USER_BY_ID, {
+    variables: {
+      id: Auth.getUserId(),
+    },
+    skip: !Auth.isAuthenticated(),
+  });
+
+  const logoutClick = () => {
+    Auth.logout(navigate);
   };
 
   return (
@@ -29,16 +38,13 @@ function NavbarComponent() {
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <Link to="/Galang" class="nav-link active">
-                  Galang Dana
-                </Link>
-              </li>
-              <li class="nav-item">
-                <Link to="/Riwayat" class="nav-link active">
-                  Riwayat Donasi
-                </Link>
-              </li>
+              {Auth.isAuthenticated() && (
+                <li class="nav-item">
+                  <Link to="/Galang" class="nav-link active">
+                    Galang Dana
+                  </Link>
+                </li>
+              )}
             </ul>
             <form class="d-flex">
               <input
@@ -49,16 +55,34 @@ function NavbarComponent() {
               />
             </form>
             <ul className="navbar-nav mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" href="" onClick={goToLogin}>
-                  Login
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="">
-                  Sign Up
-                </a>
-              </li>
+              {Auth.isAuthenticated() ? (
+                <>
+                  {!loading && (
+                    <li class="nav-item">
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        onClick={logoutClick}
+                      >
+                        Logout
+                      </button>
+                    </li>
+                  )}
+                </>
+              ) : (
+                <>
+                  <li class="nav-item">
+                    <Link to="/Login" class="nav-link active">
+                      Login
+                    </Link>
+                  </li>
+                  <li class="nav-item">
+                    <Link to="/SignUp" class="nav-link active">
+                      Sign Up
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>

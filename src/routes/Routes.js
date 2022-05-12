@@ -1,7 +1,7 @@
 import Home from "../pages/Home";
 import Galang from "../pages/Galang";
-import Riwayat from "../pages/Riwayat";
 import Login from "../pages/Login";
+import SignUp from "../pages/SignUp";
 import NewProject from "../pages/NewProject";
 import NotFound from "../pages/NotFound";
 import Donasi from "../pages/Donasi";
@@ -20,11 +20,6 @@ const pagesRoutes = [
     element: Galang,
   },
   {
-    name: "Riwayat",
-    link: "/Riwayat",
-    element: Riwayat,
-  },
-  {
     name: "Login",
     link: "/Login",
     element: Login,
@@ -35,9 +30,14 @@ const pagesRoutes = [
     element: Login,
   },
   {
-    name: "Login",
-    link: "Riwayat/Login",
-    element: Login,
+    name: "SignUp",
+    link: "/SignUp",
+    element: SignUp,
+  },
+  {
+    name: "SignUp",
+    link: "Galang/SignUp",
+    element: SignUp,
   },
   {
     name: "NewProject",

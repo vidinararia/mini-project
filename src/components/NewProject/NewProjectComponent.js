@@ -1,75 +1,73 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import swal from "sweetalert2";
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  listAll,
-  list,
-} from "firebase/storage";
-import storage from "../../firebase";
 
 function NewProjectComponent() {
-  const formData = {
+  const [data, setData] = useState({
     judul: "",
     kategori: "",
     tujuan: "",
     rincian: "",
     target: "",
     waktu: "",
-  };
-
+  });
+  const { judul, kategori, tujuan, rincian, target, waktu } = data;
   const [imageUpload, setImageUpload] = useState(null);
-  const [data, setData] = useState(formData);
-  const [imageUrls, setImageUrls] = useState([]);
 
   const handleChange = (e) => {
-    const name = e.target.name;
-    const { id, value } = e.target;
-    setData((prevProject) => {
-      return {
-        ...prevProject[id],
-      };
-    });
-    if (name === "image") {
-      const file = e.target.files[0];
-      setImageUpload(file);
-    } else {
-      const value = e.target.value;
-      setData({ ...data, [name]: value });
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
+
+  const validate = () => {
+    let error = {};
+    if (!judul) {
+      error.judul = swal.fire(
+        "Data ada yang kurang",
+        "Judul belum terisi",
+        "error"
+      );
+    }
+    if (!kategori) {
+      error.kategori = swal.fire(
+        "Data ada yang kurang",
+        "Kategori belum terisi",
+        "error"
+      );
+    }
+    if (!tujuan) {
+      error.tujuan = swal.fire(
+        "Data ada yang kurang",
+        "Tujuan belum terisi",
+        "error"
+      );
+    }
+    if (!rincian) {
+      error.rincian = swal.fire(
+        "Data ada yang kurang",
+        "Rincian belum terisi",
+        "error"
+      );
+    }
+    if (!target) {
+      error.target = swal.fire(
+        "Data ada yang kurang",
+        "Target Dana belum terisi",
+        "error"
+      );
+    }
+    if (!waktu) {
+      error.waktu = swal.fire(
+        "Data ada yang kurang",
+        "Batas waktu belum terisi",
+        "error"
+      );
     }
   };
 
-  const imagesListRef = ref(storage, "images/");
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (imageUpload == null) return;
-    const imageRef = ref(storage, `images/${imageUpload.name}`);
-    uploadBytes(imageRef, imageUpload).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then((url) => {
-        setImageUrls((prev) => [...prev, url]);
-      });
-      swal.fire({
-        position: "center",
-        icon: "success",
-        title: "data telah masuk",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    });
-    console.log(data);
+    let error = validate();
   };
-
-  useEffect(() => {
-    listAll(imagesListRef).then((response) => {
-      response.items.forEach((item) => {
-        getDownloadURL(item).then((url) => {
-          setImageUrls((prev) => [...prev, url]);
-        });
-      });
-    });
-  }, []);
 
   return (
     <div className="container mt-2">
@@ -85,9 +83,8 @@ function NewProjectComponent() {
             id="InputJudul"
             placeholder="Judul"
             name="judul"
-            value={data.judul}
+            value={judul}
             onChange={handleChange}
-            required
           />
         </div>
         <div className="col-md-6">
@@ -99,13 +96,11 @@ function NewProjectComponent() {
             className="form-select"
             aria-label="Default select example"
             name="kategori"
-            value={data.kategori}
+            value={kategori}
             onChange={handleChange}
-            required
           >
-            <option value="Home" selected>
-              Home
-            </option>
+            <option selected>Pilih Salah satu</option>
+            <option value="Home">Home</option>
             <option value="Film">Film</option>
             <option value="Travel">Travel</option>
             <option value="Phone">Phone</option>
@@ -121,9 +116,8 @@ function NewProjectComponent() {
             id="InputTujuan"
             placeholder="Tujuan"
             name="tujuan"
-            value={data.tujuan}
+            value={tujuan}
             onChange={handleChange}
-            required
           />
         </div>
         <div class="col-md-6">
@@ -136,9 +130,8 @@ function NewProjectComponent() {
             id="InputDana"
             placeholder="Rp 10.000.000"
             name="target"
-            value={data.target}
+            value={target}
             onChange={handleChange}
-            required
           />
         </div>
         <div class="col-md-6">
@@ -152,37 +145,36 @@ function NewProjectComponent() {
             onChange={(e) => {
               setImageUpload(e.target.files[0]);
             }}
-            required
           />
           <small class="text-muted">format: jpg, jpeg, dan png</small>
         </div>
         <div class="col-md-6">
-          <label
-            for="InputDate"
-            class="form-label"
-            name="waktu"
-            value={data.waktu}
-            onChange={handleChange}
-            required
-          >
+          <label for="InputDate" class="form-label">
             Batas Waktu
           </label>
-          <input type="date" class="form-control" id="InputDate" />
+          <input
+            type="date"
+            class="form-control"
+            id="InputDate"
+            name="waktu"
+            value={waktu}
+            onChange={handleChange}
+            minDate={new Date()}
+          />
         </div>
         <div class="col-md-12">
-          <label for="InputDate" class="form-label">
-            Jika Dana Sudah terkumpul
+          <label for="InputRincian" class="form-label">
+            Rincian jika Dana Sudah terkumpul
           </label>
           <textarea
             className="form-control"
-            id="InputDate"
+            id="InputRincian"
             rows="4"
             cols="50"
             placeholder="Rincian jika dana sudah terkumpul"
             name="rincian"
-            value={data.rincian}
+            value={rincian}
             onChange={handleChange}
-            required
           ></textarea>
         </div>
         <div className="col-12">
@@ -191,9 +183,6 @@ function NewProjectComponent() {
           </button>
         </div>
       </form>
-      {imageUrls.map((url) => {
-        return <img src={url} />;
-      })}
     </div>
   );
 }

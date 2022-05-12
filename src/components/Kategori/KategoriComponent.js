@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import logHome from "../../assests/logo/home.png";
 import logFilm from "../../assests/logo/clapperboard.png";
 import logTravel from "../../assests/logo/luggage.png";
@@ -20,11 +21,13 @@ function Kategori() {
               <div className="menu-categories">
                 <div className="card shadow-sm">
                   <div className="mt-2">
-                    <img
-                      src={logHome}
-                      style={{ width: "40%" }}
-                      alt="logoH"
-                    ></img>
+                    <Link to="">
+                      <img
+                        src={logHome}
+                        style={{ width: "40%" }}
+                        alt="logoH"
+                      ></img>
+                    </Link>
                     <h6 className="mt-2">Home</h6>
                   </div>
                 </div>
@@ -34,11 +37,13 @@ function Kategori() {
               <div className="menu-categories">
                 <div className="card shadow-sm">
                   <div className="mt-2">
-                    <img
-                      src={logFilm}
-                      style={{ width: "40%" }}
-                      alt="logoF"
-                    ></img>
+                    <Link to="">
+                      <img
+                        src={logFilm}
+                        style={{ width: "40%" }}
+                        alt="logoF"
+                      ></img>
+                    </Link>
                     <h6 className="mt-2">Film</h6>
                   </div>
                 </div>
@@ -48,11 +53,13 @@ function Kategori() {
               <div className="menu-categories">
                 <div className="card shadow-sm">
                   <div className="mt-2">
-                    <img
-                      src={logTravel}
-                      style={{ width: "40%" }}
-                      alt="logoT"
-                    ></img>
+                    <Link to="">
+                      <img
+                        src={logTravel}
+                        style={{ width: "40%" }}
+                        alt="logoT"
+                      ></img>
+                    </Link>
                     <h6 className="mt-2">Travel</h6>
                   </div>
                 </div>
@@ -62,11 +69,13 @@ function Kategori() {
               <div className="menu-categories">
                 <div className="card shadow-sm">
                   <div className="mt-2">
-                    <img
-                      src={logPhone}
-                      style={{ width: "40%" }}
-                      alt="logoP"
-                    ></img>
+                    <Link to="">
+                      <img
+                        src={logPhone}
+                        style={{ width: "40%" }}
+                        alt="logoP"
+                      ></img>
+                    </Link>
                     <h6 className="mt-2">Phone</h6>
                   </div>
                 </div>
