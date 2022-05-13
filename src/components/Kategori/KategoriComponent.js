@@ -24,7 +24,7 @@ function Kategori() {
                     <Link to="">
                       <img
                         src={logHome}
-                        style={{ width: "40%" }}
+                        style={{ width: "50%" }}
                         alt="logoH"
                       ></img>
                     </Link>
@@ -40,7 +40,7 @@ function Kategori() {
                     <Link to="">
                       <img
                         src={logFilm}
-                        style={{ width: "40%" }}
+                        style={{ width: "50%" }}
                         alt="logoF"
                       ></img>
                     </Link>
@@ -56,7 +56,7 @@ function Kategori() {
                     <Link to="">
                       <img
                         src={logTravel}
-                        style={{ width: "40%" }}
+                        style={{ width: "50%" }}
                         alt="logoT"
                       ></img>
                     </Link>
@@ -72,7 +72,7 @@ function Kategori() {
                     <Link to="">
                       <img
                         src={logPhone}
-                        style={{ width: "40%" }}
+                        style={{ width: "50%" }}
                         alt="logoP"
                       ></img>
                     </Link>

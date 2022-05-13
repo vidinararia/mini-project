@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import React, { useState } from "react";
+import React from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { GET_USER_BY_ID } from "../../graphQL/Query";
 import { Auth } from "../../utils/Auth";
@@ -7,7 +7,7 @@ import { Auth } from "../../utils/Auth";
 function NavbarComponent() {
   let navigate = useNavigate();
 
-  const { data, loading } = useQuery(GET_USER_BY_ID, {
+  const { loading } = useQuery(GET_USER_BY_ID, {
     variables: {
       id: Auth.getUserId(),
     },

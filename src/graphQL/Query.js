@@ -23,18 +23,35 @@ export const GET_USER_BY_ID = gql`
   }
 `;
 
-export const GET_GALANG_DANA = gql`
+export const GET_PROJECT = gql`
   query MyQuery {
-    penggalang_dana(order_by: { id: desc }) {
-      id
+    project(order_by: { id: desc }) {
       kategori {
         kategori
       }
+      id
+      id_kategori
+      imageurl
       judul
-      target_dana
+      rincian
+      goal
+      tujuan
+      batas_waktu
+    }
+  }
+`;
+
+export const GET_PROJECT_BY_ID = gql`
+  query MyQuery($id: Int!) {
+    project_by_pk(id: $id) {
+      id
+      goal
+      id_kategori
+      imageurl
+      judul
       rincian
       tujuan
-      imageurl
+      raised
       batas_waktu
     }
   }

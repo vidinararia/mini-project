@@ -1,10 +1,12 @@
 import React from "react";
-import ProjectCardComponent from "../components/ProjectCard/ProjectCardComponent";
+import NavbarComponent from "../components/Navbar/NavbarComponent";
+import ProjectDetailComponent from "../components/Project/ProjectDetailComponent";
 
 function Project() {
   return (
     <div>
-      <ProjectCardComponent />
+      <NavbarComponent />
+      <ProjectDetailComponent />
     </div>
   );
 }

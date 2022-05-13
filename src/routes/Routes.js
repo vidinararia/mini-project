@@ -5,8 +5,8 @@ import SignUp from "../pages/SignUp";
 import NewProject from "../pages/NewProject";
 import NotFound from "../pages/NotFound";
 import Donasi from "../pages/Donasi";
-import Project from "../pages/Project";
 import ThankYou from "../pages/ThankYou";
+import Project from "../pages/Project";
 
 const pagesRoutes = [
   {
@@ -55,14 +55,14 @@ const pagesRoutes = [
     element: Donasi,
   },
   {
-    name: "Project",
-    link: "/Project/:id",
-    element: Project,
-  },
-  {
     name: "ThankYou",
     link: "/ThankYou",
     element: ThankYou,
+  },
+  {
+    name: "Project",
+    link: "/project/:id",
+    element: Project,
   },
 ];
 

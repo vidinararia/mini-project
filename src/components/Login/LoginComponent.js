@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useLazyQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import Loadingsvg from "../../assests/Loadingsvg";
