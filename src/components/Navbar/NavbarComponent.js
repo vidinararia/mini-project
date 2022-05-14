@@ -46,14 +46,6 @@ function NavbarComponent() {
                 </li>
               )}
             </ul>
-            <form class="d-flex">
-              <input
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-            </form>
             <ul className="navbar-nav mb-2 mb-lg-0">
               {Auth.isAuthenticated() ? (
                 <>

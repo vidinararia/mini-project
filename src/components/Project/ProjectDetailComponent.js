@@ -1,12 +1,22 @@
-import { useLazyQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import React from "react";
-import { useParams } from "react-router-dom";
-import { GET_PROJECT_BY_ID } from "../../graphQL/Query";
 import Loadingsvg from "../../assests/Loadingsvg";
+import { useParams } from "react-router-dom";
+import NotFound from "../../pages/NotFound";
+import ProjectDetailCard from "./ProjectDetailCard";
+import { GET_PROJECT_BY_ID } from "../../graphQL/Query";
 
 function ProjectDetailComponent() {
-  const params = useParams();
-  const { data, loading, error } = useLazyQuery(GET_PROJECT_BY_ID);
+  let params = useParams();
+  const { id } = params;
+
+  const { data, loading, error } = useQuery(GET_PROJECT_BY_ID, {
+    variables: { id },
+  });
+
+  if (isNaN(id)) {
+    return <NotFound />;
+  }
 
   if (error) {
     console.log(error);
@@ -14,18 +24,20 @@ function ProjectDetailComponent() {
   }
 
   if (loading) {
-    return (
-      <div class="position-absolute top-50 start-50 translate-middle">
-        <Loadingsvg />
-      </div>
-    );
+    <div class="position-absolute top-50 start-50 translate-middle">
+      <Loadingsvg />
+    </div>;
   }
 
+  console.log(data);
+
+  // if (!data.project_by_pk) {
+  //   return <NotFound />;
+  // }
+
   return (
-    <div className="container mt-2">
-      <img src="" alt="image">
-        Project
-      </img>
+    <div className="container mt-3">
+      <ProjectDetailCard data={data} />
     </div>
   );
 }

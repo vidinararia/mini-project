@@ -26,17 +26,14 @@ export const GET_USER_BY_ID = gql`
 export const GET_PROJECT = gql`
   query MyQuery {
     project(order_by: { id: desc }) {
-      kategori {
-        kategori
-      }
+      kategori
       id
-      id_kategori
       imageurl
       judul
       rincian
       goal
       tujuan
-      batas_waktu
+      bataswaktu
     }
   }
 `;
@@ -46,13 +43,13 @@ export const GET_PROJECT_BY_ID = gql`
     project_by_pk(id: $id) {
       id
       goal
-      id_kategori
       imageurl
       judul
       rincian
       tujuan
       raised
-      batas_waktu
+      bataswaktu
+      kategori
     }
   }
 `;

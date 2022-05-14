@@ -4,8 +4,8 @@ function ProjectCardComponent({ project }) {
   const { judul, imageurl, goal, rincian, id, kategori } = project;
 
   return (
-    <div className="col-1">
-      <div class="card shadow-sm" style={{ width: "18rem;" }}>
+    <div className="col">
+      <div class="card shadow-sm">
         <Link to={"/project/" + id}>
           <img
             src={imageurl}
@@ -18,9 +18,9 @@ function ProjectCardComponent({ project }) {
         </Link>
         <div class="card-body">
           <h5 class="card-title">{judul}</h5>
-          <small>{kategori.kategori}</small>
+          <small>{kategori}</small>
           <h6>Rp {goal}</h6>
-          <p class="card-text">{rincian}</p>
+          <p class="card-text">{rincian.slice(0, 50)}</p>
         </div>
       </div>
     </div>

@@ -82,27 +82,6 @@ function NewProjectComponent({ kategoris }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     let error = validate();
-
-    insertProject({
-      variables: {
-        object: {
-          judul: data.judul,
-          id_kategori: data.kategori,
-          tujuan: data.tujuan,
-          rincian: data.rincian,
-          target_dana: data.target,
-          batas_waktu: data.waktu,
-        },
-      },
-    });
-    setData({
-      judul: "",
-      kategori: "",
-      tujuan: "",
-      rincian: "",
-      target: "",
-      waktu: "",
-    });
   };
 
   return (
@@ -135,11 +114,7 @@ function NewProjectComponent({ kategoris }) {
             onChange={handleChange}
           >
             <option selected>Pilih Salah satu</option>
-            {kategoris?.kategoris.map((item) => (
-              <option key={item.id} value={item.id}>
-                {item.kategori}
-              </option>
-            ))}
+            <option></option>
           </select>
         </div>
         <div class="col-md-6">

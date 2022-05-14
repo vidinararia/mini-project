@@ -5,7 +5,6 @@ import SignUp from "../pages/SignUp";
 import NewProject from "../pages/NewProject";
 import NotFound from "../pages/NotFound";
 import Donasi from "../pages/Donasi";
-import ThankYou from "../pages/ThankYou";
 import Project from "../pages/Project";
 
 const pagesRoutes = [
@@ -16,27 +15,17 @@ const pagesRoutes = [
   },
   {
     name: "Galang",
-    link: "/Galang",
+    link: "Galang",
     element: Galang,
   },
   {
     name: "Login",
-    link: "/Login",
-    element: Login,
-  },
-  {
-    name: "Login",
-    link: "Galang/Login",
+    link: "Login",
     element: Login,
   },
   {
     name: "SignUp",
-    link: "/SignUp",
-    element: SignUp,
-  },
-  {
-    name: "SignUp",
-    link: "Galang/SignUp",
+    link: "SignUp",
     element: SignUp,
   },
   {
@@ -53,11 +42,6 @@ const pagesRoutes = [
     name: "Donasi",
     link: "/Donasi",
     element: Donasi,
-  },
-  {
-    name: "ThankYou",
-    link: "/ThankYou",
-    element: ThankYou,
   },
   {
     name: "Project",
