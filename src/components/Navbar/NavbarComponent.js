@@ -20,13 +20,13 @@ function NavbarComponent() {
 
   return (
     <div>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-          <Link to="/" class="navbar-brand">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div className="container">
+          <Link to="/" className="navbar-brand">
             <strong>Pot of Funding</strong>
           </Link>
           <button
-            class="navbar-toggler"
+            className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent"
@@ -34,13 +34,13 @@ function NavbarComponent() {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span class="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               {Auth.isAuthenticated() && (
-                <li class="nav-item">
-                  <Link to="/Galang" class="nav-link active">
+                <li className="nav-item">
+                  <Link to="/Galang" className="nav-link active">
                     Galang Dana
                   </Link>
                 </li>
@@ -50,7 +50,7 @@ function NavbarComponent() {
               {Auth.isAuthenticated() ? (
                 <>
                   {!loading && (
-                    <li class="nav-item">
+                    <li className="nav-item">
                       <button
                         type="button"
                         className="btn btn-primary"
@@ -63,13 +63,13 @@ function NavbarComponent() {
                 </>
               ) : (
                 <>
-                  <li class="nav-item">
-                    <Link to="/Login" class="nav-link active">
+                  <li className="nav-item">
+                    <Link to="/Login" className="nav-link active">
                       Login
                     </Link>
                   </li>
-                  <li class="nav-item">
-                    <Link to="/SignUp" class="nav-link active">
+                  <li className="nav-item">
+                    <Link to="/SignUp" className="nav-link active">
                       Sign Up
                     </Link>
                   </li>

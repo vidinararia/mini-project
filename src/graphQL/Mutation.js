@@ -8,9 +8,9 @@ export const INSERT_USER_SIGNUP = gql`
   }
 `;
 
-export const INSERT_PENGGALANGAN_DANA = gql`
-  mutation MyMutation($object: penggalang_dana_insert_input = {}) {
-    insert_penggalang_dana_one(object: $object) {
+export const INSERT_PROJECT = gql`
+  mutation MyMutation($object: project_insert_input = {}) {
+    insert_project_one(object: $object) {
       id
     }
   }

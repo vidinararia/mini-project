@@ -20,12 +20,12 @@ const pagesRoutes = [
   },
   {
     name: "Login",
-    link: "Login",
+    link: "/Login",
     element: Login,
   },
   {
     name: "SignUp",
-    link: "SignUp",
+    link: "/SignUp",
     element: SignUp,
   },
   {

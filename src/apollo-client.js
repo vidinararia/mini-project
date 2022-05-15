@@ -5,7 +5,7 @@ import { createClient } from "graphql-ws";
 
 const wsLink = new GraphQLWsLink(
   createClient({
-    url: "ws://more-gecko-90.hasura.app/v1/graphql",
+    url: "wss://more-gecko-90.hasura.app/v1/graphql",
     connectionParams: {
       headers: {
         "x-hasura-admin-secret":

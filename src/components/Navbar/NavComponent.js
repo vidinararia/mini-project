@@ -4,9 +4,9 @@ import { Link, Outlet } from "react-router-dom";
 function NavbarComponent() {
   return (
     <div>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-          <Link to="/" class="navbar-brand">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div className="container">
+          <Link to="/" className="navbar-brand">
             <strong>Pot of Funding</strong>
           </Link>
         </div>

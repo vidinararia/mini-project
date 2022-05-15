@@ -18,17 +18,18 @@ function ProjectDetailComponent() {
     return <NotFound />;
   }
 
+  if (loading) {
+    return (
+      <div className="position-absolute top-50 start-50 translate-middle">
+        <Loadingsvg />
+      </div>
+    );
+  }
+
   if (error) {
     console.log(error);
     return null;
   }
-
-  if (loading) {
-    <div class="position-absolute top-50 start-50 translate-middle">
-      <Loadingsvg />
-    </div>;
-  }
-
   console.log(data);
 
   // if (!data.project_by_pk) {

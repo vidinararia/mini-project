@@ -33,7 +33,7 @@ function SignUpComponent() {
 
   if (loadingUser) {
     return (
-      <div class="position-absolute top-50 start-50 translate-middle">
+      <div className="position-absolute top-50 start-50 translate-middle">
         <Loadingsvg />
       </div>
     );

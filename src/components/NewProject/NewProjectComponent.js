@@ -1,100 +1,114 @@
-import React from "react";
-import { useState } from "react";
+import React, { useRef, useState } from "react";
 import swal from "sweetalert2";
-import { INSERT_PENGGALANGAN_DANA } from "../../graphQL/Mutation";
+import { INSERT_PROJECT } from "../../graphQL/Mutation";
 import { GET_PROJECT } from "../../graphQL/Query";
 import { useMutation } from "@apollo/client";
+import { CONST } from "../../utils/Constants";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "../../firebase";
+import Loadingsvg from "../../assests/Loadingsvg";
 
-function NewProjectComponent({ kategoris }) {
-  const [data, setData] = useState({
+function NewProjectComponent() {
+  const formData = {
     judul: "",
     kategori: "",
     tujuan: "",
     rincian: "",
-    target: "",
-    waktu: "",
-  });
-
-  const [insertProject, { loading: loadingInsert }] = useMutation(
-    INSERT_PENGGALANGAN_DANA,
-    {
-      onCompleted: () => {
-        swal.fire("Berhasil", "Berhasil membuat penggalangan dana", "success");
-      },
-      onError: (error) => {
-        console.log(error);
-      },
-      refetchQueries: [GET_PROJECT],
-    }
-  );
-  const [imageUpload, setImageUpload] = useState(null);
-
-  const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
+    goal: "",
+    bataswaktu: "",
   };
 
-  const validate = () => {
-    let error = {};
-    if (!data.judul) {
-      error.judul = swal.fire(
-        "Data ada yang kurang",
-        "Judul belum terisi",
-        "error"
-      );
+  const [data, setData] = useState(formData);
+  const [image, setImage] = useState(null);
+  const imageRef = useRef();
+
+  const [insertProject, { loading }] = useMutation(INSERT_PROJECT, {
+    onCompleted: () => {
+      swal.fire("Berhasil", "Berhasil membuat project", "success");
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+    refetchQueries: [GET_PROJECT],
+  });
+
+  if (loading) {
+    return (
+      <div className="position-absolute top-50 start-50 translate-middle">
+        <Loadingsvg />
+      </div>
+    );
+  }
+
+  const handleChange = (e) => {
+    const name = e.target.name;
+
+    if (name === "image") {
+      const file = e.target.files[0];
+      setImage(file);
+    } else {
+      const value = e.target.value;
+      setData({ ...data, [name]: value });
     }
-    if (!data.kategori) {
-      error.kategori = swal.fire(
-        "Data ada yang kurang",
-        "Kategori belum terisi",
-        "error"
-      );
-    }
-    if (!data.tujuan) {
-      error.tujuan = swal.fire(
-        "Data ada yang kurang",
-        "Tujuan belum terisi",
-        "error"
-      );
-    }
-    if (!data.rincian) {
-      error.rincian = swal.fire(
-        "Data ada yang kurang",
-        "Rincian belum terisi",
-        "error"
-      );
-    }
-    if (!data.target) {
-      error.target = swal.fire(
-        "Data ada yang kurang",
-        "Target Dana belum terisi",
-        "error"
-      );
-    }
-    if (!data.waktu) {
-      error.waktu = swal.fire(
-        "Data ada yang kurang",
-        "Batas waktu belum terisi",
-        "error"
-      );
-    }
+  };
+
+  const uploadData = (file) => {
+    const fileName = `${file.name}`;
+    const storageRef = ref(storage, `projects/${fileName}`);
+    const uploadTask = uploadBytes(storageRef, file);
+
+    uploadTask.then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((downloadUrl) => {
+        insertProject({
+          variables: {
+            object: {
+              judul: data.judul,
+              kategori: data.kategori,
+              tujuan: data.tujuan,
+              rincian: data.rincian,
+              goal: data.goal,
+              bataswaktu: data.bataswaktu,
+              imageurl: downloadUrl,
+            },
+          },
+        });
+      });
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let error = validate();
+
+    if (
+      !data.judul ||
+      !data.bataswaktu ||
+      !data.kategori ||
+      !data.goal ||
+      !data.rincian ||
+      !data.tujuan
+    ) {
+      swal.fire("Data ada yang kurang", "silakan isi semua form", "error");
+    } else if (!image) {
+      swal.fire("Gambar belum diisi", "silakan isi semua form", "error");
+    } else {
+      uploadData(image);
+      setData(formData);
+      setImage(null);
+      imageRef.current.value = "";
+    }
   };
 
   return (
     <div className="container mt-2">
-      <h3>Masukkan Detail Penggalang Dana Kamu</h3>
+      <h3>Masukkan Detail Project Kamu</h3>
       <form onSubmit={handleSubmit} className="row g-3">
         <div className="col-md-6">
-          <label for="InputJudul" class="form-label">
+          <label htmlFor="InputJudul" className="form-label">
             Judul
           </label>
           <input
             type="text"
-            class="form-control"
+            className="form-control"
             id="InputJudul"
             placeholder="Judul"
             name="judul"
@@ -103,7 +117,7 @@ function NewProjectComponent({ kategoris }) {
           />
         </div>
         <div className="col-md-6">
-          <label for="kategoris" class="form-label">
+          <label htmlFor="kategoris" className="form-label">
             Kategori
           </label>
           <select
@@ -113,17 +127,21 @@ function NewProjectComponent({ kategoris }) {
             value={data.kategori}
             onChange={handleChange}
           >
-            <option selected>Pilih Salah satu</option>
-            <option></option>
+            <option>Pilih Salah satu</option>
+            {CONST.KATEGORI.map((item) => (
+              <option key={item.id} value={item.name}>
+                {item.name}
+              </option>
+            ))}
           </select>
         </div>
-        <div class="col-md-6">
-          <label for="InputTujuan" class="form-label">
+        <div className="col-md-6">
+          <label htmlFor="InputTujuan" className="form-label">
             Tujuan Menggalang Dana
           </label>
           <input
-            type="currency"
-            class="form-control"
+            type="text"
+            className="form-control"
             id="InputTujuan"
             placeholder="Tujuan"
             name="tujuan"
@@ -131,50 +149,49 @@ function NewProjectComponent({ kategoris }) {
             onChange={handleChange}
           />
         </div>
-        <div class="col-md-6">
-          <label for="InputDana" class="form-label" datatype="currency">
+        <div className="col-md-6">
+          <label htmlFor="InputDana" className="form-label" datatype="currency">
             Target Dana
           </label>
           <input
-            type="number"
-            class="form-control"
+            type="text"
+            className="form-control"
             id="InputDana"
             placeholder="Rp 10.000.000"
-            name="target"
-            value={data.target}
+            name="goal"
+            value={data.goal}
             onChange={handleChange}
           />
         </div>
-        <div class="col-md-6">
-          <label for="InputFile" class="form-label">
+        <div className="col-md-6">
+          <label htmlFor="InputFile" className="form-label">
             Upload Foto Penggalangan Dana Kamu
           </label>
           <input
             type="file"
-            class="form-control"
+            className="form-control"
             id="InputFile"
-            onChange={(e) => {
-              setImageUpload(e.target.files[0]);
-            }}
+            name="image"
+            ref={imageRef}
+            onChange={handleChange}
           />
-          <small class="text-muted">format: jpg, jpeg, dan png</small>
+          <small className="text-muted">format: jpg, jpeg, dan png</small>
         </div>
-        <div class="col-md-6">
-          <label for="InputDate" class="form-label">
+        <div className="col-md-6">
+          <label htmlFor="InputDate" className="form-label">
             Batas Waktu
           </label>
           <input
             type="date"
-            class="form-control"
+            className="form-control"
             id="InputDate"
-            name="waktu"
-            value={data.waktu}
+            name="bataswaktu"
+            value={data.bataswaktu}
             onChange={handleChange}
-            minDate={new Date()}
           />
         </div>
-        <div class="col-md-12">
-          <label for="InputRincian" class="form-label">
+        <div className="col-md-12">
+          <label htmlFor="InputRincian" className="form-label">
             Rincian jika Dana Sudah terkumpul
           </label>
           <textarea
@@ -189,7 +206,7 @@ function NewProjectComponent({ kategoris }) {
           ></textarea>
         </div>
         <div className="col-12">
-          <button type="submit" class="btn btn-primary" loading={loadingInsert}>
+          <button className="btn btn-primary" type="">
             Submit
           </button>
         </div>

@@ -9,8 +9,8 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          {pagesRoutes.map((item) => (
-            <Route path={item.link} element={<item.element />} />
+          {pagesRoutes.map((item, index) => (
+            <Route path={item.link} key={index} element={<item.element />} />
           ))}
           <Route element={<PrivateRoute />}>
             <Route path="/" element={<Home />} />

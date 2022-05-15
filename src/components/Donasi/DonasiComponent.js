@@ -6,13 +6,13 @@ function Donasi() {
       <div className="container mt-2">
         <h3>Masukkan Nominal Donasi</h3>
         <form>
-          <div class="mb-3">
-            <label for="InputDana" class="form-label" datatype="currency">
+          <div className="mb-3">
+            <label for="InputDana" className="form-label" datatype="currency">
               Nominal Donasi
             </label>
             <input
               type="number"
-              class="form-control"
+              className="form-control"
               id="InputDana"
               placeholder="Rp 10.000"
             />
@@ -46,7 +46,7 @@ function Donasi() {
               placeholder="Tulis Pesan kepada si penggalang dana"
             ></textarea>
           </div>
-          <button type="submit" class="btn btn-primary">
+          <button type="submit" className="btn btn-primary">
             Donasi
           </button>
         </form>
