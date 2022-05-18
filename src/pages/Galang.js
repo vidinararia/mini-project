@@ -17,7 +17,7 @@ function Galang() {
           <strong>Buat Penggalangan Dana</strong>
         </h3>
         <div>
-          <button type="button" class="btn btn-primary" onClick={goToForm}>
+          <button type="button" className="btn btn-primary" onClick={goToForm}>
             Buat Galang
           </button>
         </div>

@@ -15,3 +15,12 @@ export const INSERT_PROJECT = gql`
     }
   }
 `;
+
+export const UPDATE_PROJECT_BY_PK = gql`
+  mutation MyMutation($id: Int!, $raised: bigint!) {
+    update_project_by_pk(pk_columns: { id: $id }, _set: { raised: $raised }) {
+      id
+      raised
+    }
+  }
+`;

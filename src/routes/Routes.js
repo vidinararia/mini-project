@@ -4,7 +4,6 @@ import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
 import NewProject from "../pages/NewProject";
 import NotFound from "../pages/NotFound";
-import Donasi from "../pages/Donasi";
 import Project from "../pages/Project";
 
 const pagesRoutes = [
@@ -37,11 +36,6 @@ const pagesRoutes = [
     name: "NotFound",
     link: "*",
     element: NotFound,
-  },
-  {
-    name: "Donasi",
-    link: "/Donasi",
-    element: Donasi,
   },
   {
     name: "Project",

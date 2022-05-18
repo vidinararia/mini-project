@@ -12,8 +12,9 @@ function ProjectCardComponent({ project }) {
             className="card-img-top"
             alt="imagethumbnail"
             width="100%"
-            height="160"
+            height="176"
             preserveAspectRatio="xMidYMid slice"
+            style={{ objectFit: "contain", background: "grey" }}
           />
         </Link>
         <div className="card-body">

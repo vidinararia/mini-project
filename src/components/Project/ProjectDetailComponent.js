@@ -32,13 +32,13 @@ function ProjectDetailComponent() {
   }
   console.log(data);
 
-  // if (!data.project_by_pk) {
-  //   return <NotFound />;
-  // }
+  if (!data.project_by_pk) {
+    return <NotFound />;
+  }
 
   return (
     <div className="container mt-3">
-      <ProjectDetailCard data={data} />
+      <ProjectDetailCard detail={data} />
     </div>
   );
 }

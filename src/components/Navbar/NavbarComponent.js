@@ -6,7 +6,6 @@ import { Auth } from "../../utils/Auth";
 
 function NavbarComponent() {
   let navigate = useNavigate();
-
   const { loading } = useQuery(GET_USER_BY_ID, {
     variables: {
       id: Auth.getUserId(),

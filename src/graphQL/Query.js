@@ -50,6 +50,9 @@ export const GET_PROJECT_BY_ID = gql`
       raised
       bataswaktu
       kategori
+      user {
+        username
+      }
     }
   }
 `;
