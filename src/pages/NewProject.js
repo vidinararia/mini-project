@@ -1,11 +1,11 @@
 import React from "react";
-import NavComponent from "../components/Navbar/NavComponent";
+import NavbarComponent from "../components/Navbar/NavbarComponent";
 import NewProjectComponent from "../components/NewProject/NewProjectComponent";
 
 function NewProject() {
   return (
     <div>
-      <NavComponent />
+      <NavbarComponent />
       <NewProjectComponent />
     </div>
   );
